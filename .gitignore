@@ -71,3 +71,4 @@ bingosync-app/tools
 *.sqlite
 /static/
 bingo/**
+/bingosync-boardgen/brute_forcer_out

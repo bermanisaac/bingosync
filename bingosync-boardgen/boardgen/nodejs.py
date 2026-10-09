@@ -11,6 +11,7 @@ from .base import GeneratorOutputSquare, BingoGenerator
 class LegacyNodejsOutput(BaseModel):
     seed: int
     objectives: list[GeneratorOutputSquare]
+    log: list[str]
 
 class BingoGeneratorLegacyNodejs(BingoGenerator):
     def __init__(self, filepath: str, debug: bool = False):
@@ -22,7 +23,10 @@ class BingoGeneratorLegacyNodejs(BingoGenerator):
         opts = {"size": size, "seed": str(seed)}
         js_command = "bingoGenerator(bingoList, " + json.dumps(opts) + ")"
         raw = self.eval(js_command)
-        return LegacyNodejsOutput.model_validate(raw).objectives
+        model = LegacyNodejsOutput.model_validate(raw)
+        if self.debug:
+            print(len(model.log))
+        return model.objectives
 
     def eval(self, js_command, timeout=None) -> Any:
         if timeout is None:

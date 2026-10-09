@@ -364,6 +364,8 @@ bingoGenerator = function(bingoList, opts) {
         return newArray;
     }
 
+    log = []
+
     var bingoBoard = [];
     for (let i = 0; i < size * size; i++) {
         bingoBoard[i] = {
@@ -387,10 +389,14 @@ bingoGenerator = function(bingoList, opts) {
             currentObj = shuffledGoals[(j + RNG) % shuffledGoals.length];
             synergy = checkLine(i, currentObj.types);
             if (minSynObj == null || synergy < minSynObj.synergy) {
+                if (minSynObj != null) {
+                    log.push("kicked synergy from " + minSynObj.synergy + " to " + synergy)
+                }
                 minSynObj = {
                     synergy: synergy,
                     value: currentObj
                 };
+                
             }
             j++;
         } while ((synergy !== 0) && (j < shuffledGoals.length));
@@ -398,7 +404,7 @@ bingoGenerator = function(bingoList, opts) {
         bingoBoard[i].name = minSynObj.value[lang] || minSynObj.value.name;
         bingoBoard[i].synergy = minSynObj.synergy;
     }
-    return {'objectives': bingoBoard, 'seed': seed};
+    return {'objectives': bingoBoard, 'seed': seed, 'log': log};
 }
 
 module.exports = bingoGenerator;
