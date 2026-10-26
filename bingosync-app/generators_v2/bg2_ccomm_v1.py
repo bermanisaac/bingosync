@@ -55,19 +55,11 @@ class CCommV1(BingoGeneratorV2):
                 bingo_board[i] = current_obj
                 obj_synergy = self.check_line_synergy(i, size, bingo_board)
                 if min_syn_obj == None or obj_synergy < synergy:
-                    # if self.debug and synergy != 9999:
-                    #     print(f"replaced best synergy {synergy} =>> {obj_synergy}")
                     min_syn_obj = current_obj
                     synergy = obj_synergy
                     min_index = j
                 j += 1
             bingo_board[i] = min_syn_obj
-            if self.debug and tier == 0:
-                obj = bingo_board[i].name
-                if (obj, min_index) in self.which_objs.keys():
-                    self.which_objs[(obj, min_index)] += 1
-                else:
-                    self.which_objs[(obj, min_index)] = 1
 
         return bingo_board
 
@@ -92,48 +84,14 @@ class CCommV1(BingoGeneratorV2):
 
     def check_line_synergy(self, square : int, size : int, board : GeneratorOutput) -> int:
         """Iterate the given square's rows and columns to count objectives with synergy"""
-
-        # TODO Fix row and col are sorta swapped rn
-
-        row = square % size
-        col = square // size
-
         self_tags = board[square].tags
         synergy = 0
-        # Iterate row
-        for i in range(size):
-            if i == col:
-                continue
+        for other_square in self.get_synergy_locations(size, square):
             for tag in self_tags:
-                if tag in board[(i * size) + row].tags:
+                if tag in board[other_square].tags:
                     synergy += 1
-
-        # Iterate col
-        for i in range(size):
-            if i == row:
-                continue
-            for tag in self_tags:
-                if tag in board[(col * size) + i].tags:
-                    synergy += 1
-
-        # Iterate TLBR
-        if row == col:
-            for i in range(size):
-                if i == row:
-                    continue
-                for tag in self_tags:
-                    if tag in board[(i * size) + i].tags:
-                        synergy += 1
-
-        # Iterate TRBL
-        if row == (size - col - 1):
-            for i in range(size):
-                if i == col:
-                    continue
-                for tag in self_tags:
-                    if tag in board[(i * size) + size - i - 1].tags:
-                        synergy += 1
         return synergy
+ 
 
     def shuffle(self, list : list):
         for i in range(len(list)):
@@ -158,7 +116,8 @@ class CCommV1(BingoGeneratorV2):
 
             self.random_seed_x = self.rand.randint(0, 4)
         else:
-            self.rand_tiers = self.shuffle([*range(size * size)])
+            self.rand_tiers = [*range(size * size)]
+            self.shuffle(self.rand_tiers)
 
     def difficulty(self, size, tier):
             # This function takes a space on the board between 0 and 24, and returns its difficulty score, also between 0 and 24.
@@ -177,3 +136,51 @@ class CCommV1(BingoGeneratorV2):
         row = self.rt1[index1]
         col = self.rt2[index2]
         return (5 * row) + col
+
+    def get_synergy_locations(self, size: int, square: int):
+        if size == 5:
+            return size_5_synergy[square]
+        
+        row = square % size
+        col = square // size
+        for i in range(size):
+            if i != col:
+                yield (i * size) + row
+            if i != row:
+                yield (col * size) + i
+
+        if row == col:
+            for i in range(size):
+                if i != row:
+                    yield (i * size) + i
+        if row == (size - col - 1):
+            if i != col:
+                yield (i * size) + size - i - 1
+
+size_5_synergy = [
+    [1, 2, 3, 4,        5, 10, 15, 20,      6, 12, 18, 24], # square 0
+    [0, 2, 3, 4,        6, 11, 16, 21], # square 1
+    [0, 1, 3, 4,        7, 12, 17, 22], # square 2
+    [0, 1, 2, 4,        8, 13, 18, 23], # square 3
+    [0, 1, 2, 3,        9, 14, 19, 24,      8, 12, 16, 20], # square 4
+    [6, 7, 8, 9,        0, 10, 15, 20], # square 5
+    [5, 7, 8, 9,        1, 11, 16, 21,       0, 12, 18, 24], # square 6
+    [5, 6, 8, 9,        2, 12, 17, 22], # square 7
+    [5, 6, 7, 9,        3, 13, 18, 23,      4, 12, 16, 20], # square 8
+    [5, 6, 7, 8,        4, 14, 19, 24], # square 9
+    [11, 12, 13, 14,    0, 5, 15, 20], # square 10
+    [10, 12, 13, 14,    1, 6, 16, 21], # square 11
+    [10, 11, 13, 14,    2, 7, 17, 22,       0, 6, 18, 24,       4, 8, 16, 20], # square 12
+    [10, 11, 12, 14,    3, 8, 18, 23], # square 13
+    [10, 11, 12, 13,    4, 9, 19, 24], # square 14
+    [16, 17, 18, 19,    0, 5, 10, 20], # square 15
+    [15, 17, 18, 19,    1, 6, 11, 21,       4, 8, 12, 20], # square 16
+    [15, 16, 18, 19,    2, 7, 12, 22], # square 17
+    [15, 16, 17, 19,    3, 8, 13, 23,       0, 6, 12, 24], # square 18
+    [15, 16, 17, 18,    4, 9, 14, 24], # square 19
+    [21, 22, 23, 24,    0, 5, 10, 15,       4, 8, 12, 16], # square 20
+    [20, 22, 23, 24,    1, 6, 11, 16], # square 21
+    [20, 21, 23, 24,    2, 7, 12, 17], # square 22
+    [20, 21, 22, 24,    3, 8, 13, 18], # square 23
+    [20, 21, 22, 23,    4, 9, 14, 19,       0, 6, 12, 18], # square 24
+]

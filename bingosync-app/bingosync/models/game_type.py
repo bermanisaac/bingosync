@@ -370,6 +370,8 @@ class GameType(Enum):
     celeste_v2_custom = 365
     celeste_v2_3_3 = 366
     celeste_v2_3_4 = 367
+    celeste_v2_solo_blackout = 368
+    celeste_v2_blackout = 369
 
     def __str__(self):
         return self.short_name
@@ -532,9 +534,11 @@ MANUAL_GAME_GROUPS = {
     GameType.celeste_v2: {
         "name": "Celeste v2",
         "variants": [
-            (GameType.celeste_v2, "Lockout (v2)", "Celeste Lockout (3.2)"),
+            (GameType.celeste_v2, "Lockout (3.2.3)", "Celeste Lockout (3.2)"),
             (GameType.celeste_v2_3_3, "Lockout (beta 3.3)", "Celeste Lockout (beta 3.3)"),
             (GameType.celeste_v2_3_4, "Lockout (beta 3.4)", "Celeste Lockout (beta 3.4)"),
+            (GameType.celeste_v2_solo_blackout, "Solo Blackout", "Celeste Solo Blackout"),
+            (GameType.celeste_v2_blackout, "Co-op Blackout", "Celeste Co-op Blackout"),
         ],
     },
     GameType.celeste_extensions: {

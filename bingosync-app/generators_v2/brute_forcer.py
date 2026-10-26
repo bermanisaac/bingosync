@@ -93,24 +93,11 @@ def merge_output(thread_count: int, count_per: int, gen_str: str, name: str):
     write_data_file(1, (thread_count * count_per), gen_str, counts, name)
 
 gen_str = "3_2_3"
-# board_count = 100_00
 board_count = 100_000
-thread_count = 10
+thread_count = 1
 if __name__ == "__main__":
     with open(json_323, encoding="utf-8") as json_file:
         json = json_file.read().replace("\\n", "").replace("Mess:", "Mess;")
-
-        # gen = CCommV1(json, debug=True)
-
-        # gen.which_objs = {}
-
-        # board_count = 100_000
-        # for i in range(board_count):
-        #     gen.default_generate(i + random.randint(0, 9999999))
-
-        # sorted = dict(sorted(gen.which_objs.items()))
-        # for key in sorted.keys():
-        #     print(key, sorted[key])
 
         run_boards_with_perf(json)
         merge_output(thread_count, board_count, gen_str, "counts")
