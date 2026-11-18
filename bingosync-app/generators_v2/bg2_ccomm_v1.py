@@ -12,8 +12,7 @@ class CCommV1(BingoGeneratorV2):
         generator: CcommV1Generator
         try:
             generator = adapter.validate_json(custom_json)
-        except Exception as e:
-            print(e)
+        except Exception:
             return None
 
         # TODO: validate generator tier count, etc.
