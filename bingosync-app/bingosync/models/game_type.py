@@ -360,7 +360,7 @@ class GameType(Enum):
     hitman_3_chongqing = 356
     hitman_3_mendoza = 357
     horizon_zero_dawn_frozen_wilds = 358
-    celeste_extensions = 359
+    celeste_misc_bingo = 359
     celeste_blackout_solo = 360
     celeste_cheat_mode = 361
     custom_ccomm = 362
@@ -372,6 +372,14 @@ class GameType(Enum):
     celeste_v2_3_4 = 367
     celeste_v2_solo_blackout = 368
     celeste_v2_blackout = 369
+    # miscbingo category
+    celeste_v2_sj = 370
+    celeste_v2_zombingo = 371
+    celeste_v2_tic_tac_go = 372
+    celeste_v2_rocky_road = 373
+    celeste_v2_pocket_longo = 374
+    celeste_v2_alterego = 375
+    celeste_v2_old_sitego = 376
 
     def __str__(self):
         return self.short_name
@@ -430,7 +438,7 @@ class GameType(Enum):
     def game_choices():
         def to_sort_value(key):
             key = strip_articles(key[1]).lower()
-            FORCED_FIRST_NAMES = ["celeste", "celeste extensions", "custom (advanced)", "celeste v2"]
+            FORCED_FIRST_NAMES = ["celeste", "celeste misc bingo", "custom (advanced)", "celeste v2"]
             if key in FORCED_FIRST_NAMES:
                 return (FORCED_FIRST_NAMES.index(key), key)
             return (len(FORCED_FIRST_NAMES), key)
@@ -541,12 +549,19 @@ MANUAL_GAME_GROUPS = {
             (GameType.celeste_v2_blackout, "Co-op Blackout", "Celeste Co-op Blackout"),
         ],
     },
-    GameType.celeste_extensions: {
-        "name" : "Celeste Extensions",
+    GameType.celeste_misc_bingo: {
+        "name" : "Celeste Misc Bingo",
         "variants": [
-            (GameType.celeste_extensions, "New Longo", "Celeste Long New"), #Because every game needs a default this file is called celeste_extensions_generator.js
+            (GameType.celeste_misc_bingo, "New Longo", "Celeste Long New"), #Because every game needs a default this file is called celeste_misc_bingo_generator.js
             (GameType.celeste_long, "Old Longo", "Celeste Long"),
+            (GameType.celeste_v2_pocket_longo, "Pocket Longo", "Celeste Pocket Longo"),
             (GameType.celeste_cheat_mode, "Cheat Mode", "Celeste Cheat Mode"),
+            (GameType.celeste_v2_sj, "Strawberry Jam", "Strawberry Jam Bingo"),
+            (GameType.celeste_v2_rocky_road, "Rocky Road", "Celeste Rocky Road"),
+            (GameType.celeste_v2_zombingo, "Zombingo", "Celeste Zombingo"),
+            (GameType.celeste_v2_alterego, "Alterego", "Celeste Alterego"),
+            (GameType.celeste_v2_tic_tac_go, "Tic Tac Go", "Celeste Tic Tac Go"),
+            (GameType.celeste_v2_old_sitego, "Old Sitego", "Celeste Old Sitego"),
         ],
     },
     GameType.crash_twinsanity: {
