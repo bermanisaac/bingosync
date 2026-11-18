@@ -438,7 +438,7 @@ class GameType(Enum):
     def game_choices():
         def to_sort_value(key):
             key = strip_articles(key[1]).lower()
-            FORCED_FIRST_NAMES = ["celeste", "celeste misc bingo", "custom (advanced)", "celeste v2"]
+            FORCED_FIRST_NAMES = ["celeste", "celeste misc bingo", "custom (advanced)", "celeste (legacy)"]
             if key in FORCED_FIRST_NAMES:
                 return (FORCED_FIRST_NAMES.index(key), key)
             return (len(FORCED_FIRST_NAMES), key)
@@ -527,7 +527,7 @@ MANUAL_GAME_GROUPS = {
         ],
     },
     GameType.celeste: {
-        "name": "Celeste",
+        "name": "Celeste (legacy)",
         "variants": [
             (GameType.celeste, "Lockout", "Celeste"),
             (GameType.celeste_beta, "Lockout (Beta)", "Celeste Lockout (beta)"),
@@ -540,7 +540,7 @@ MANUAL_GAME_GROUPS = {
         ],
     },
     GameType.celeste_v2: {
-        "name": "Celeste v2",
+        "name": "Celeste",
         "variants": [
             (GameType.celeste_v2, "Lockout (3.2.3)", "Celeste Lockout (3.2)"),
             (GameType.celeste_v2_3_3, "Lockout (beta 3.3)", "Celeste Lockout (beta 3.3)"),
