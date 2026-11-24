@@ -9,7 +9,7 @@ from bingosync.settings import GENERATOR_TIMEOUT_SECONDS
 
 logger = logging.getLogger(__name__)
 
-GEN_DIR = "generators"
+GEN_DIR = os.path.join("generators", "legacy_generator_jsons")
 GEN_NAME_TEMPL = "{}_generator.js"
 
 GEN_DIR_V2 = os.path.join("generators", "generator_jsons_v2")
@@ -122,11 +122,11 @@ class BingoGenerator:
 
 
 def process_card(card, seed, size):
+    if (isinstance(card, dict)):
+        seed = card['seed']
+        card = card['objectives']
+    
     # the regular SRL generator includes an extra null element at the front, so ignore that
-    
-    seed = card['seed']
-    card = card['objectives']
-    
     if len(card) == (size * size) + 1:
         card = card[1:]
     if len(card) != size * size:
