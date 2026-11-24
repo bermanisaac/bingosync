@@ -19,14 +19,22 @@ PREFERRED_SIZE_RE = re.compile(r'generator-preferred-size: (\d)+')
 # Generator JSONs that use CComm v2 -- only custom for now
 CCOMM_V2_FORMATS = ["celeste_v2_custom"]
 
+CCOMM_V2_GAME_LOOKUP = {
+    "celeste_v2_sinkout_royale": "celeste_v2_solo_blackout"
+}
+
 def load_generator(game_name: str):
     if game_name.startswith("celeste_v2"):
         from generators_v2.bingo_generator_2 import BingoGeneratorV2
         from generators_v2.bg2_ccomm_v1 import CCommV1
         from generators_v2.bg2_ccomm_v2 import CCommV2
+        from generators_v2.bg2_sinkout_royale import SinkoutRoyale
+
 
         # first, find the generator json
         json_name = "celeste_v2_lockout" if game_name == "celeste_v2" else game_name
+        if game_name in CCOMM_V2_GAME_LOOKUP.keys():
+            json_name = CCOMM_V2_GAME_LOOKUP[game_name]
         json_name += ".json"
 
         board_json : str | None = None
@@ -36,6 +44,9 @@ def load_generator(game_name: str):
                 board_json = json_file.read()            
         except Exception:
             pass
+
+        if game_name == "celeste_v2_sinkout_royale":
+            return SinkoutRoyale(board_json)
 
         if game_name in CCOMM_V2_FORMATS:
             return CCommV2(board_json)

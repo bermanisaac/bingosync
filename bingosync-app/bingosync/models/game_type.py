@@ -380,6 +380,7 @@ class GameType(Enum):
     celeste_v2_pocket_longo = 374
     celeste_v2_alterego = 375
     celeste_v2_old_sitego = 376
+    celeste_v2_sinkout_royale = 377
 
     def __str__(self):
         return self.short_name
@@ -562,6 +563,7 @@ MANUAL_GAME_GROUPS = {
             (GameType.celeste_v2_alterego, "Alterego", "Celeste Alterego"),
             (GameType.celeste_v2_tic_tac_go, "Tic Tac Go", "Celeste Tic Tac Go"),
             (GameType.celeste_v2_old_sitego, "Old Sitego", "Celeste Old Sitego"),
+            (GameType.celeste_v2_sinkout_royale, "Sinkout Royale", "Celeste Sinkout Royale"),
         ],
     },
     GameType.crash_twinsanity: {
