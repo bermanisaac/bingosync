@@ -526,6 +526,15 @@ MANUAL_GAME_GROUPS = {
             (GameType.castlevania_sotn_randomizer, "Randomizer", "SotN Randomizer"),
         ],
     },
+    GameType.celeste_v2: {
+        "name": "Celeste",
+        "variants": [
+            (GameType.celeste_v2, "Lockout (3.2.3)", "Celeste Lockout (3.2)"),
+            (GameType.celeste_v2_3_3, "Lockout (beta 3.3)", "Celeste Lockout (beta 3.3)"),
+            (GameType.celeste_v2_3_4, "Lockout (beta 3.4)", "Celeste Lockout (beta 3.4)"),
+            (GameType.celeste_v2_solo_blackout, "Solo Blackout", "Celeste Solo Blackout"),
+        ],
+    },
     GameType.celeste: {
         "name": "Celeste (legacy)",
         "variants": [
@@ -537,15 +546,6 @@ MANUAL_GAME_GROUPS = {
             (GameType.celeste_portuguese, "Normal - Portuguese", "Celeste PT"),
             (GameType.celeste_blackout_cn, "Blackout - CN", "Celeste Blackout CN"),
             (GameType.celeste_turkish, "Normal - Turkish", "Celeste TR"),
-        ],
-    },
-    GameType.celeste_v2: {
-        "name": "Celeste",
-        "variants": [
-            (GameType.celeste_v2, "Lockout (3.2.3)", "Celeste Lockout (3.2)"),
-            (GameType.celeste_v2_3_3, "Lockout (beta 3.3)", "Celeste Lockout (beta 3.3)"),
-            (GameType.celeste_v2_3_4, "Lockout (beta 3.4)", "Celeste Lockout (beta 3.4)"),
-            (GameType.celeste_v2_solo_blackout, "Solo Blackout", "Celeste Solo Blackout"),
         ],
     },
     GameType.celeste_misc_bingo: {

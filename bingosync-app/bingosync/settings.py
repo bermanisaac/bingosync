@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
-IS_PROD = os.getenv('DEBUG', '').lower() not in ('1', 'yes')
+IS_PROD = False
 
 SECRET_KEY = os.getenv("SECRET_KEY", None if IS_PROD else '1234')
 ADMINS = os.getenv("ADMINS")
